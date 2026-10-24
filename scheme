@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS restaurant_billing;
+USE restaurant_billing;
+
+-- Create menu_items table
+CREATE TABLE IF NOT EXISTS menu_items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+);
+
+-- Create bills table
+CREATE TABLE IF NOT EXISTS bills (
+    bill_id INT AUTO_INCREMENT PRIMARY KEY,
+    cashier_name VARCHAR(50),
+    bill_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10,2) NOT NULL
+);
+
+-- Create bill_items table
+CREATE TABLE IF NOT EXISTS bill_items (
+    bill_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    bill_id INT NOT NULL,
+    item_name VARCHAR(50) NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(bill_id)
+);
+
+-- Insert starting menu items
+INSERT INTO menu_items (name, price) VALUES
+('Burger', 120.00),
+('Pizza', 250.00),
+('Pasta', 180.00),
+('French Fries', 90.00),
+('Coke', 40.00),
+('Ice Cream', 70.00);
